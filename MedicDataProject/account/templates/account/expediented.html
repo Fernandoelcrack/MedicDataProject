@@ -31,7 +31,7 @@
                         <ul class="menu-list">
                             {% for expd in expedientesd %}
                                 <li>
-                                    <a href="{% url 'expediented' %}?expdid={{ expd.id }}">{{ expd.nombreD }}</a>
+                                    <a href="{% url 'expediented' %}?expdid={{ expd.idEd }}">{{ expd.nombreD }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -72,13 +72,20 @@
                             </div>
                         </div>
 
+                        <div class="field">
+                            <label class="label">Usuario del Paciente</label>
+                            <div class="control">
+                                <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expediented %} value="{{ expediented.idPg }}"{% endif %}>
+                            </div>
+                        </div>
+
                         <div class="field is-grouped">
                             <div class="control">
                                 <button class="button is-primary" action="">Save</button>
                             </div>
                             {% if expediented %}
                                 <div class="control">
-                                    <a href="{% url 'delete_expediented' expediented.id %}" class="button is-danger">Delete</a>
+                                    <a href="{% url 'delete_expediented' expediented.idEd %}" class="button is-danger">Delete</a>
                                 </div>
                             {% endif %}
                         </div>

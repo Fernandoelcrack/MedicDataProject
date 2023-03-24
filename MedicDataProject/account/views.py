@@ -60,11 +60,18 @@ def logoutUser (request):
     return redirect('login_view')
 
 def editorg(request):
-    expgid = int(request.GET.get('expgid', 0))
+    expgid = 0
+    try:
+        expgid = int(request.GET.get('expgid'))
+    except:
+        pass
+    expedienteg = ExpedienteG.objects.filter(idEg = expgid)
+    idDg = User.objects.get(id = request.user.id)
+    print(idDg)
     expedientesg = ExpedienteG.objects.all()
 
     if request.method == 'POST':
-        expgid = int(request.POST.get('expgid', 0))
+        expgid = int(request.POST.get('expgid'))
         nombreG = request.POST.get('nombreG')
         peso = request.POST.get('peso')
         operaciones = request.POST.get('operaciones')
@@ -72,9 +79,13 @@ def editorg(request):
         alergias = request.POST.get('alergias')
         enfermedades = request.POST.get('enfermedades')
         tipoSangre = request.POST.get('tipoSangre')
+        idPg = request.POST.get('idPg')
+        print(idPg)
+        idPg = User.objects.get(username = idPg)
+        print(idPg)
     
-        if expgid > 0:
-            expedienteg = ExpedienteG.objects.get(pk=expgid)
+        if expedienteg.exists():
+            #expedienteg = ExpedienteG.objects.get(pk=expgid)
             expedienteg.nombreG = nombreG
             expedienteg.peso = peso
             expedienteg.operaciones = operaciones
@@ -82,15 +93,16 @@ def editorg(request):
             expedienteg.alergias = alergias
             expedienteg.enfermedades = enfermedades
             expedienteg.tipoSangre = tipoSangre
+            expedienteg.idPg = idPg
+            expedienteg.idDg = idDg
             expedienteg.save()
-
+            print('1', expedienteg.idEg)
             return redirect('/expedienteg?expgid=%i' % expgid) 
-
         else:
-            expedienteg = ExpedienteG.objects.create(nombreG=nombreG, peso=peso, operaciones=operaciones, lesiones=lesiones, alergias=alergias, enfermedades=enfermedades, tipoSangre=tipoSangre) 
+            expedienteg = ExpedienteG.objects.create(nombreG=nombreG, peso=peso, operaciones=operaciones, lesiones=lesiones, alergias=alergias, enfermedades=enfermedades, tipoSangre=tipoSangre, idPg=User.objects.get(username = idPg), idDg=idDg) 
 
-            return redirect('/expedienteg?expgid=%i' % expedienteg.id)
-
+            return redirect('/expedienteg?expgid=%i' % expedienteg.idEg)
+        
     if expgid > 0:
         expedienteg = ExpedienteG.objects.get(pk=expgid)
     else:
@@ -105,30 +117,38 @@ def editorg(request):
     return render(request, 'account/expedienteg.html', context)
 
 def editoro(request):
-
-    expoid = int(request.GET.get('expoid', 0))
+    expoid = 0
+    try:
+        expoid = int(request.GET.get('expoid'))
+    except:
+        pass
+    expedienteo = ExpedienteO.objects.filter(idEo = expoid)
+    idDo = User.objects.get(id = request.user.id)
     expedienteso = ExpedienteO.objects.all()
 
     if request.method == 'POST':
-        expoid = int(request.POST.get('expoid', 0))
+        expoid = int(request.POST.get('expoid'))
         nombreO = request.POST.get('nombreO')
         gojoD = request.POST.get('gojoD')
         gojoI = request.POST.get('gojoI')
         padecimientos = request.POST.get('padecimientos')
         cambioMicas = request.POST.get('cambioMicas')
+        idPg = request.POST.get('idPg')
 
-        if expoid > 0:
-            expedienteo = ExpedienteO.objects.get(pk=expoid)
+        if expedienteo.exists():
+            #expedienteo = ExpedienteO.objects.get(pk=expoid)
             expedienteo.nombreO = nombreO
             expedienteo.gojoD = gojoD
             expedienteo.gojoI = gojoI
             expedienteo.padecimientos = padecimientos
             expedienteo.cambioMicas = cambioMicas
+            expedienteo.idPg = User.objects.get(username = idPg)
+            expedienteo.idDo = idDo
             expedienteo.save()
 
-            return redirect('/?expoid=%i' % expoid)
+            return redirect('/expedienteo?expoid=%i' % expoid)
         else:
-            expedienteo = ExpedienteO.objects.create(nombreO=nombreO, gojoD = gojoD, gojoI = gojoI, padecimientos = padecimientos, cambioMicas = cambioMicas) 
+            expedienteo = ExpedienteO.objects.create(nombreO=nombreO, gojoD = gojoD, gojoI = gojoI, padecimientos = padecimientos, cambioMicas = cambioMicas, idPg=User.objects.get(username = idPg), idDo=idDo)  
 
             return redirect('/expedienteo?expoid=%i' % expedienteo.id)
 
@@ -145,25 +165,34 @@ def editoro(request):
     return render(request, 'account/expedienteo.html', context)
 
 def editord(request):
-    expdid = int(request.GET.get('expdid', 0))
+    expdid = 0
+    try:
+        expdid = int(request.GET.get('expdid'))
+    except:
+        pass
+    expediented = ExpedienteD.objects.filter(idEd = expdid)
+    idDd = User.objects.get(id = request.user.id)
     expedientesd = ExpedienteD.objects.all()
 
     if request.method == 'POST':
-        expdid = int(request.POST.get('expdid', 0))
+        expdid = int(request.POST.get('expdid'))
         nombreD = request.POST.get('nombreD')
         NDiente = request.POST.get('NDiente')
         Descripcion = request.POST.get('Descripcion')
+        idPg = request.POST.get('idPg')
     
-        if expdid > 0:
-            expediented = ExpedienteD.objects.get(pk=expdid)
+        if expediented.exists():
+            #expediented = ExpedienteD.objects.get(pk=expdid)
             expediented.nombreD = nombreD
             expediented.NDiente = NDiente
             expediented.Descripcion = Descripcion
+            expediented.idPg = User.objects.get(username = idPg)
+            expediented.idDd = idDd
             expediented.save()
 
-            return redirect('/?expdid=%i' % expdid)
+            return redirect('/expediented?expdid=%i' % expdid)
         else:
-            expediented = ExpedienteD.objects.create(nombreD=nombreD, NDiente = NDiente, Descripcion = Descripcion) 
+            expediented = ExpedienteD.objects.create(nombreD=nombreD, NDiente = NDiente, Descripcion = Descripcion, idPg=User.objects.get(username = idPg), idDd=idDd) 
 
             return redirect('/expediented?expdid=%i' % expediented.id)
 

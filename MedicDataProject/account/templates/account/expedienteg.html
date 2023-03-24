@@ -31,7 +31,7 @@
                         <ul class="menu-list">
                             {% for expg in expedientesg %}
                                 <li>
-                                    <a href="{% url 'expedienteg' %}?expgid={{ expg.id }}">{{ expg.nombreG }}</a>
+                                    <a href="{% url 'expedienteg' %}?expgid={{ expg.idEg }}">{{ expg.nombreG }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -103,7 +103,7 @@
                         <div class="field">
                             <label class="label">Usuario del Paciente</label>
                             <div class="control">
-                                <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expedienteg %} value="{{ user.is_patient }}"{% endif %}>
+                                <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expedienteg %} value="{{ expedienteg.idPg }}"{% endif %}>
                             </div>
                         </div>
 
@@ -113,7 +113,7 @@
                             </div>
                             {% if expedienteg %}
                                 <div class="control">
-                                    <a href="{% url 'delete_expedienteg' expedienteg.id %}" class="button is-danger">Delete</a>
+                                    <a href="{% url 'delete_expedienteg' expedienteg.idEg %}" class="button is-danger">Delete</a>
                                 </div>
                             {% endif %}
                         </div>
