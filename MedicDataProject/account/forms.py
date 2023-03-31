@@ -1,6 +1,7 @@
+from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Profile
 
 class LoginForm (forms.Form):
     username = forms.CharField(
@@ -52,3 +53,9 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2', 'is_admin', 'is_patient', 'is_doctor')
+
+class ProfileForm(ModelForm):
+	class Meta:
+		model = Profile
+		fields = '__all__'
+		exclude = ['user']

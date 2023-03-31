@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
@@ -68,7 +68,7 @@ def editorg(request):
     expedienteg = ExpedienteG.objects.filter(idEg = expgid)
     idDg = User.objects.get(id = request.user.id)
     print(idDg)
-    expedientesg = ExpedienteG.objects.all()
+    expedientesg = ExpedienteG.objects.filter(idDg_id = idDg)
 
     if request.method == 'POST':
         expgid = int(request.POST.get('expgid'))
@@ -85,7 +85,7 @@ def editorg(request):
         print(idPg)
     
         if expedienteg.exists():
-            #expedienteg = ExpedienteG.objects.get(pk=expgid)
+            expedienteg = ExpedienteG.objects.get(pk=expgid)
             expedienteg.nombreG = nombreG
             expedienteg.peso = peso
             expedienteg.operaciones = operaciones
@@ -124,7 +124,7 @@ def editoro(request):
         pass
     expedienteo = ExpedienteO.objects.filter(idEo = expoid)
     idDo = User.objects.get(id = request.user.id)
-    expedienteso = ExpedienteO.objects.all()
+    expedienteso = ExpedienteO.objects.filter(idDo_id = idDo)
 
     if request.method == 'POST':
         expoid = int(request.POST.get('expoid'))
@@ -150,7 +150,7 @@ def editoro(request):
         else:
             expedienteo = ExpedienteO.objects.create(nombreO=nombreO, gojoD = gojoD, gojoI = gojoI, padecimientos = padecimientos, cambioMicas = cambioMicas, idPg=User.objects.get(username = idPg), idDo=idDo)  
 
-            return redirect('/expedienteo?expoid=%i' % expedienteo.id)
+            return redirect('/expedienteo?expoid=%i' % expedienteo.idEo)
 
     if expoid > 0:
         expedienteo = ExpedienteO.objects.get(pk=expoid)
@@ -171,8 +171,9 @@ def editord(request):
     except:
         pass
     expediented = ExpedienteD.objects.filter(idEd = expdid)
-    idDd = User.objects.get(id = request.user.id)
-    expedientesd = ExpedienteD.objects.all()
+    #idDd = User.objects.get(id = request.user)
+    idDd = request.user
+    expedientesd = ExpedienteD.objects.filter(idDd_id = idDd)
 
     if request.method == 'POST':
         expdid = int(request.POST.get('expdid'))
@@ -194,7 +195,7 @@ def editord(request):
         else:
             expediented = ExpedienteD.objects.create(nombreD=nombreD, NDiente = NDiente, Descripcion = Descripcion, idPg=User.objects.get(username = idPg), idDd=idDd) 
 
-            return redirect('/expediented?expdid=%i' % expediented.id)
+            return redirect('/expediented?expdid=%i' % expediented.idEd)
 
     if expdid > 0:
         expediented = ExpedienteD.objects.get(pk=expdid)
@@ -224,3 +225,21 @@ def delete_expediented(request, expdid):
     expediented.delete()
 
     return redirect('expediented')
+
+def accountSettings(request):
+    try:
+        profile = request.user.profile
+        form = ProfileForm(instance=profile)
+    except Profile.DoesNotExist:
+        profile = Profile(user=request.user)
+    
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile.nombre = nombre
+            form.save()
+            
+    else:
+        form = ProfileForm()
+    return render(request, 'account/account_settings.html', {'form': form})

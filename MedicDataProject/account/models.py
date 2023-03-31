@@ -27,6 +27,9 @@ class ExpedienteG(models.Model):
     class Meta:
         ordering=('nombreG',)
 
+    def __str__(self):
+        return self.nombreG
+
 class ExpedienteO(models.Model):
     idEo = models.AutoField(primary_key=True)
     nombreO = models.CharField(max_length=255, verbose_name='Nombre del paciente')
@@ -42,6 +45,9 @@ class ExpedienteO(models.Model):
     class Meta:
         ordering=('nombreO',)
 
+    def __str__(self):
+        return self.nombreO
+
 class ExpedienteD(models.Model):
     idEd = models.AutoField(primary_key=True)
     nombreD = models.CharField(max_length=255, verbose_name='Nombre del paciente')
@@ -50,10 +56,39 @@ class ExpedienteD(models.Model):
     fechaD=models.DateTimeField(auto_now_add=True)
     fecha_actD=models.DateField(auto_now=True)
     idPg = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario paciente', related_name='paciented')
-    idDd = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario doctor', related_name='doctord')
+    idDd = models.OneToOneField(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario doctor', related_name='doctord')
 
     class Meta:
         ordering=('nombreD',)
 
+    def __str__(self):
+        return self.nombreD
+        
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=255, verbose_name='Nombre del usuario')
+    apellidos = models.CharField(max_length=255, verbose_name='Apellidos del paciente')
+    telefonoc = models.CharField(max_length=255, verbose_name='Teléfono celular')
+    telconsultorio = models.CharField(max_length=255, verbose_name='Telefono consultorio')
+    lugart = models.CharField(max_length=255, verbose_name='Lugar de trabajo')
+    direcciont = models.CharField(max_length=255, verbose_name='Direccion de trabajo')
+    especialidad = models.CharField(max_length=255, verbose_name='Especilidad general')
+    otras = models.CharField(max_length=255, verbose_name='Otras Especilidades')
+    profile_pic = models.ImageField(default="perfil.png", null=True, blank=True)
 
+    def __str__(self):
+        return self.nombre      
 
+#class Perfil(models.Model):
+    #idP = models.AutoField(primary_key=True)
+    #user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    #nom = models.CharField(max_length=255, verbose_name='Nombre del usuario')
+    #apell = models.CharField(max_length=255, verbose_name='Apellidos del paciente')
+    #edad = models.CharField(max_length=255, verbose_name='Edad del paciente')
+    #telc = models.CharField(max_length=255, verbose_name='Teléfono celular')
+    #domicilio = models.CharField(max_length=255, verbose_name='Domicilio')
+    #seguro = models.CharField(max_length=255, verbose_name='Seguro Medico')
+    #profile_pic = models.ImageField(default="perfil1.png", null=True, blank=True)
+
+    #def __str__(self):
+        #return self.nombre       
