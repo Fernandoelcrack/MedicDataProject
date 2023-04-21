@@ -23,10 +23,15 @@
 
         <style>
             .profile-pic{
-                max-width: 200px;
-                max-height:200px;
+                max-width: 245px;
+                max-height:245px;
                 margin: 0 auto;
                 border-radius: 50%;
+            }
+            .profile-title{
+                max-width: 390px;
+                max-height:390px;
+                margin: 0 auto;
             }
       
         body {
@@ -94,7 +99,7 @@
 <body>
     
     
-    <br>
+    <br><br><br><br>
     <div class="row">
         <div class="col-md-3">
             <div class="card card-body">
@@ -104,12 +109,12 @@
                 <hr>
                 <img class="profile-pic" src="{{request.user.profile.profile_pic.url}}" >
                 <hr>
-                <h4 style="text-align: center">{{request.user}}</h4>
-                <h4 style="text-align: center">{{request.user.email}}</h4>
+                <h4 style="text-align: center">Username: {{request.user}}</h4>
+                <h4 style="text-align: center">E-mail: {{request.user.email}}</h4>
             
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6">
             <div class="card card-body">
                 
                 <form method="POST" action="" enctype="multipart/form-data">
@@ -118,12 +123,19 @@
             
                 <input class="btn btn-primary" type="submit" name="Update Information">
                 </form>
+                
+            </div>
+            
+        </div>
+        <div class="col-md-3">
+            <div class="card card-body">
+                <hr>
+                <h3 style="text-align: center">Mi Título</h3>
+                <hr>
+                <img class="profile-title" src="{{request.user.profile.profile_title.url}}" >
             </div>
         </div>
     </div>
-    
-    
-    
     {% endblock %}
 </body>
 

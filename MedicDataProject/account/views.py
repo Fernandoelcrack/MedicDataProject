@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import SignUpForm, LoginForm, ProfileForm
+from .forms import SignUpForm, LoginForm, ProfileForm, PerfilForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
@@ -226,20 +226,46 @@ def delete_expediented(request, expdid):
 
     return redirect('expediented')
 
-def accountSettings(request):
+def accountSettingsMedic(request):
     try:
         profile = request.user.profile
-        form = ProfileForm(instance=profile)
     except Profile.DoesNotExist:
         profile = Profile(user=request.user)
     
-
+    form = ProfileForm(instance=profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            profile.nombre = nombre
             form.save()
-            
-    else:
-        form = ProfileForm()
+    
     return render(request, 'account/account_settings.html', {'form': form})
+
+
+def viewExpediente(request):
+    user_id = request.user.id
+    expediente = ExpedienteG.objects.filter(idPg = user_id)
+    expediented = ExpedienteD.objects.filter(idPg = user_id)
+    expedienteo = ExpedienteO.objects.filter(idPg = user_id)
+    
+
+    context = {
+        "expediente": expediente,
+        "expedienteo": expedienteo,
+        "expediented": expediented,
+    
+    }
+    return render (request, "account/patient.html", context)
+
+def accountSettingsPatient(request):
+    try:
+        perfil = request.user.perfil
+    except Perfil.DoesNotExist:
+        perfil = Perfil(user=request.user)
+    
+    form = PerfilForm(instance=perfil)
+    if request.method == 'POST':
+        form = PerfilForm(request.POST, request.FILES, instance=perfil)
+        if form.is_valid():
+            form.save()
+    
+    return render(request, 'account/account_settingsP.html', {'form': form})

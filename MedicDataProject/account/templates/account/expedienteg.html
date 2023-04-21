@@ -1,6 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <link
+        rel="shortcut icon"
+        href="{% static 'IconoJAYMO.ico' %}"
+        type="image/x-icon"
+        />
        <meta charset="utf-8">
        <meta name="viewport" content="width-device-width", initial-scale="1">
        <title>Expediente General</title> 
@@ -38,26 +44,30 @@
                     </aside>
                 </div>
 
-                <div class="column is-10">
+                <div class="column is-7">
                     <form method="post" action="{% url 'expedienteg' %}">
                         {% csrf_token %}
 
                         <input type="hidden" name="expgid" value="{{ expgid }}">
 
                         <div class="field">
-                            <label class="label">Nombre del Paciente
+                            <label class="label">
                                 {% if expedienteg %}
                                     <span class="has-text-grey-light">
                                         Created at: {{ expedienteg.fecha|date:"m/d Y" }} / Modified at: {{ expedienteg.fecha_actG|date:"m/d Y" }}
                                     </span>
                                 {% endif %}
                             </label>
-
+                            <br>
+                            <label class="label">Nombre del Médico</label>
                             <div class="control">
-                                <input type="text" class="input" name="nombreG" placeholder="Nombre del Paciente"{% if expedienteg %} value="{{ expedienteg.nombreG }}"{% endif %}>
+                                <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
                             </div>
                         </div>
-
+                        <label class="label">Nombre del Paciente</label>
+                        <div class="control">
+                            <input type="text" class="input" name="nombreG" placeholder="Nombre del Paciente"{% if expedienteg %} value="{{ expedienteg.nombreG }}"{% endif %}>
+                        </div>
                         <div class="field">
                             <label class="label">Peso</label>
                             <div class="control">
@@ -120,6 +130,14 @@
                     </form>
 
                 </div>
+                <div class="column is-3">
+                        
+                    <br><br><br><br>
+                    <center>
+                        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                        <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_fy89ayl5.json"  background="transparent"  speed="1"  style="width: 540px; height: 550px;"  loop  autoplay></lottie-player>
+                    </center>
+            </div>
 
             </div>
         </section>

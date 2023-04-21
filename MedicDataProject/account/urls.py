@@ -6,7 +6,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login_view'),
     path('register/', views.register, name='register'),
     path('adminpage/', views.admin, name='adminpage'),
-    path('patient/', views.patient, name='patient'),
+    path('patient/', views.viewExpediente, name='patient'),
     path('doctor/', views.doctor, name='doctor'),
     path('logout/', views.logoutUser, name="logout"),
     path('expedienteg/', views.editorg, name="expedienteg"),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('delete_expedienteg/<int:expgid>/', views.delete_expedienteg, name='delete_expedienteg'),
     path('delete_expedienteo/<int:expoid>/', views.delete_expedienteo, name='delete_expedienteo'),
     path('delete_expediented/<int:expdid>/', views.delete_expediented, name='delete_expediented'),
-    path('profile/', views.accountSettings, name="profile"),
+    path('profile/', views.accountSettingsMedic, name="profile"),
+    path('perfil/', views.accountSettingsPatient, name="perfil"),
 
 ]

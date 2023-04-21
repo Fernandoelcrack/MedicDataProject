@@ -1,198 +1,187 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Hugo 0.84.0" />
-    <link rel="icon" href="{% static 'IconoJAYMO.ico' %}" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-    />
-    <title>Expediente General</title>
+<html>
 
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.0/examples/dashboard/"
-    />
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Paciente</title>
+  <link rel="stylesheet" href="{% static 'sidemenu.css' %}">
+  <link rel="stylesheet" href="{% static 'tabla.css' %}">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <style>
+  </style>
+</head>
 
-    <!-- Bootstrap core CSS -->
-    <link
-      href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-      .nav-link {
-        padding-top: 1rem;
-      }
-      .nav-link > span {
-        display: block;
-        padding-top: 1rem;
-        text-align: center;
-      }
-      .nav-link > img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="static/dashboard.css" rel="stylesheet" />
-  </head>
-  <body>
-    <header
-      class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow"
-      style="background-color: #afe1fb; height: 3rem"
-    >
-      <a style="padding: 0 0 0.3rem 1.5rem"
-        ><img
-          src="{% static 'IconoJAYMO.ico' %}"
-          width="30"
-          height="30"
-        /><strong> J a y m o</strong></a
-      >
-      <button
-        class="navbar-toggler position-absolute d-md-none collapsed"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#sidebarMenu"
-        aria-controls="sidebarMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <span>Hello, {{user.username}}</span>
-      <span><a href="/perfil/"><strong>Mi Perfil</strong></a></span>
-      <span><a href="/logout/"><strong>Logout</strong></a></span>
-
-    </header>
-
-    <div class="container-fluid">
-      <div class="row">
-        <nav
-          id="sidebarMenu"
-          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
-        >
-          <div class="position-sticky pt-3">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  <img
-                    src="{% static 'expediente.png' %}"
-                    width="50"
-                    height="50"
-                  />
-                  <span>Expediente General</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  <img src="{% static 'diente.png' %}" width="50" height="50" />
-                  <span>Expediente Dental</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  <img src="{% static 'ver.png' %}" width="50" height="50" />
-                  <span>Expediente Ocular</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-          >
-            <h1 class="h2">Expediente General</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group me-2"></div>
-            </div>
-          </div>
-          <style>
-            .add {
-              background-color: #afe1fb;
-              color: #000000;
-              border: none;
-              border-radius: 3px;
-              padding: 0.5rem 1rem;
-              cursor: pointer;
-            }
-            .add:active {
-              transform: scale(0.98);
-            }
-            .note {
-              background-color: #fff;
-              box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
-              margin: 30px 20px;
-              height: 400px;
-              width: 70%;
-              overflow-y: scroll;
-              overflow-x: hidden;
-            }
-            .note .tools {
-              background-color: #9ec862;
-              display: flex;
-              justify-content: flex-end;
-              padding: 0.5rem;
-            }
-            .note .tools button {
-              background-color: transparent;
-              border: none;
-              color: #fff;
-              cursor: pointer;
-              font-size: 1rem;
-              margin-left: 0.5rem;
-            }
-            .note textarea {
-              outline: none;
-              font-family: inherit;
-              font-size: 1.2rem;
-              border: none;
-              height: 400px;
-              width: 100%;
-              padding: 20px;
-            }
-            .main {
-              padding: 20px;
-            }
-            .hidden {
-              display: none;
-            }
-          </style>
-          
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.2.2/marked.min.js"></script>
-          <script src="script.js"></script>
-          <div id="div1"></div>
-        </main>
+<body>
+  <div id="sidemenu" class="menu-collapsed">
+    <div id="header">
+      <div id="title"><span>Mi perfil</span></div>
+      <div id="menu-btn">
+        <div class="btn-hamburger"></div>
+        <div class="btn-hamburger"></div>
+        <div class="btn-hamburger"></div>
       </div>
     </div>
 
-    <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <div id="profile">
+      <div id="photo"><img src="{{request.user.perfil.profile_pic.url}}" alt="">
+        <div id="name"><span>{{ user }}</span>
+          <hr>
+          <a href="{% url 'perfil' %}" align="center">Ver mi perfil</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-items">
+      <div class="item">
+        <a href="#general">
+          <div class="icon"><img src="{% static 'expediente.png' %}" alt=""></div>
+          <div class="title"><span>Expediente General</span></div>
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#dental">
+          <div class="icon"><img src="{% static 'diente.png' %}" alt=""></div>
+          <div class="title"><span>Expediente Dental</span></div>
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#ocular">
+          <div class="icon"><img src="{% static 'ver.png' %}" alt=""></div>
+          <div class="title"><span>Expediente Ocular</span></div>
+        </a>
+
+      </div>
+      <div class="item">
+        <a href="/logout/">
+          <div class="title"><span>Salir</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-container">
+    {% if expediente %}
+
+    <table class="tablegeneral" id="general">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Peso</th>
+          <th scope="col">Lesiones</th>
+          <th scope="col">Alergias</th>
+          <th scope="col">Tipo de sangre</th>
+          <th scope="col">Paciente</th>
+          <th scope="col">Doctor</th>
+          <th scope="col">Fecha de creación</th>
+          <th scope="col">Fecha de Modificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expediente in expediente %}
+        <tr>
+          <td scope="row"> {{ expediente.nombreG }} </th>
+          <td>{{ expediente.peso }}</td>
+          <td>{{ expediente.lesiones }}</td>
+          <td>{{ expediente.alergias }}</td>
+          <td>{{ expediente.tipoSangre }}</td>
+          <td>{{ expediente.idPg }}</td>
+          <td>{{ expediente.idDg }}</td>
+          <td>{{ expediente.fecha }}</td>
+          <td>{{ expediente.fecha_actG }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    {% endif %}
+
+    <div>
+      {% if expediented %}
+      <table class="tabledental" id="dental">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Numero de diente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de Modificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expediented in expediented %}
+          <tr>
+            <td scope="row"> {{ expediented.nombreD }}</th>
+            <td>{{ expediented.NDiente }}</td>
+            <td>{{ expediented.Descripcion }}</td>
+            <td>{{ expediented.idDd }}</td>
+            <td>{{ expediented.fechaD }}</td>
+            <td>{{ expediented.fecha_actD }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <div>
+      {% if expedienteo %}
+      <table class="tableocular" id="ocular">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Graduacion Ojo derecho</th>
+            <th scope="col">Graduacion Ojo Izquierdo</th>
+            <th scope="col">Padecimientos</th>
+            <th scope="col">Cambio de Micas</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de Modificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expedienteo in expedienteo %}
+          <tr>
+            <td scope="row"> {{ expedienteo.nombreO }}</th>
+            <td>{{ expedienteo.gojoD }}</td>
+            <td>{{ expedienteo.gojoI }}</td>
+            <td>{{ expedienteo.padecimientos }}</td>
+            <td>{{ expedienteo.cambioMicas }}</td>
+            <td>{{ expedienteo.idPg }}</td>
+            <td>{{ expedienteo.idDg }}</td>
+            <td>{{ expedienteo.fechaO }}</td>
+            <td>{{ expedienteo.fecha_actO }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+    const btn = document.querySelector('#menu-btn');
+    const menu = document.querySelector('#sidemenu');
+    btn.addEventListener('click', e => {
+      menu.classList.toggle("menu-expanded");
+      menu.classList.toggle("menu-collapsed");
+      document.querySelector('body').classList.toggle('body-expanded');
+    });
+  </script>
+
+</body>
+
 </html>

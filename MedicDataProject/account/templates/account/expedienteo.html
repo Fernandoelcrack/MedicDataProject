@@ -1,6 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <link
+        rel="shortcut icon"
+        href="{% static 'IconoJAYMO.ico' %}"
+        type="image/x-icon"
+        />
        <meta charset="utf-8">
        <meta name="viewport" content="width-device-width", initial-scale="1">
        <title>Expediente Ocular</title> 
@@ -38,7 +44,7 @@
                     </aside>
                 </div>
 
-                <div class="column is-10">
+                <div class="column is-7">
                     <form method="post" action="{% url 'expedienteo' %}">
                         {% csrf_token %}
 
@@ -106,6 +112,15 @@
                     </form>
 
                 </div>
+                <div class="column is-3">
+                        
+                    <br><br><br><br>
+                    <center>
+                        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                        <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_erdqblci.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player>
+                    </center>
+                </div>
+
 
             </div>
         </section>

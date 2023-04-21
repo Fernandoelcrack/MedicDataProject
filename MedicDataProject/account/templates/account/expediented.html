@@ -1,11 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <link
+            rel="shortcut icon"
+            href="{% static 'IconoJAYMO.ico' %}"
+            type="image/x-icon"
+        />
        <meta charset="utf-8">
        <meta name="viewport" content="width-device-width", initial-scale="1">
        <title>Expediente Dental</title> 
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
     </head>
+    <style>
+        
+        .anatomia{
+                max-width: 500px;
+                max-height:500px;
+                margin: 0 auto;
+                
+            }
+
+        .margen{
+            border: rgba(0, 0, 0, 0.131) 1px solid;
+            margin: 10px;
+            padding: 20px;
+        }
+        .buttonadd{
+            background-color: #9fd0e9;
+            font-size: 13px;
+            border-radius: 12px;
+            border:rgb(255, 255, 255);
+            float: right;
+            font-family: 'Montserrat', sans-serif;
+            padding: 9px;
+            color:rgb(0, 0, 0);
+            text-align: center;
+        }
+
+        
+    </style>
     <body>
         <nav class="navbar is-dark">
             <div class="navbar-brand">
@@ -38,41 +75,61 @@
                     </aside>
                 </div>
 
-                <div class="column is-10">
+                <div class="column is-7">
                     <form method="post" action="{% url 'expediented' %}">
                         {% csrf_token %}
 
                         <input type="hidden" name="expdid" value="{{ expdid }}">
-
+                        
                         <div class="field">
-                            <label class="label">Nombre del Paciente
-                                {% if expediented %}
+                            <label class="label">
+                            {% if expediented %}
                                     <span class="has-text-grey-light">
                                         Created at: {{ expediented.fechaD|date:"m/d Y" }} / Modified at: {{ expediented.fecha_actD|date:"m/d Y" }}
                                     </span>
                                 {% endif %}
                             </label>
-
+                            <br>
+                            <label class="label">Nombre del Médico
+                            </label>
+                            
+                            <div class="control">
+                                <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
+                            </div>
+                        </div>
+                        <label class="label">Nombre del Paciente</label>
+                        <div class="field">
                             <div class="control">
                                 <input type="text" class="input" name="nombreD" placeholder="Nombre del Paciente"{% if expediented %} value="{{ expediented.nombreD }}"{% endif %}>
                             </div>
                         </div>
 
+                        <label class="label">Edad del Paciente</label>
                         <div class="field">
-                            <label class="label">Nombre del Diente</label>
                             <div class="control">
-                                <input type="text" class="input" name="NDiente" placeholder="Nombre del Diente"{% if expediented %} value="{{ expediented.NDiente }}"{% endif %}>
+                                <input type="text" class="input" name="nombreD" placeholder="Nombre del Paciente"{% if expediented %} value="{{ expediented.nombreD }}"{% endif %}>
                             </div>
                         </div>
+                        <hr>
+                        <div class="margen">
+                            <div class="field">
+                                <label class="label">Nombre o número del Diente</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="NDiente" placeholder="Nombre del Diente"{% if expediented %} value="{{ expediented.NDiente }}"{% endif %}>
+                                </div>
+                            </div>
 
-                        <div class="field">
-                            <label class="label">Descripcion</label>
-                            <div class="control">
-                                <input type="text" class="input" name="Descripcion" placeholder="Descripcion"{% if expediented %} value="{{ expediented.Descripcion }}"{% endif %}>
+                            <div class="field">
+                                <label class="label">Descripcion</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="Descripcion" placeholder="Descripcion"{% if expediented %} value="{{ expediented.Descripcion }}"{% endif %}>
+                                </div>
                             </div>
                         </div>
-
+                        <button class="buttonadd" id="add-another">Agregar otro diente</button>
+                        <br>
                         <div class="field">
+                            <br>
                             <label class="label">Usuario del Paciente</label>
                             <div class="control">
                                 <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expediented %} value="{{ expediented.idPg }}"{% endif %}>
@@ -91,6 +148,13 @@
                         </div>
                     </form>
 
+                </div>
+                <div class="column is-3">
+                        
+                        <br><br>
+                        <center><img class= "anatomia" src="{% static 'anatomiadientes.gif' %}"></center>
+                    
+                    
                 </div>
 
             </div>
