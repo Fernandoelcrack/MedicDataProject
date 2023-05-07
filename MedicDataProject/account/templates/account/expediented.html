@@ -11,6 +11,7 @@
        <meta name="viewport" content="width-device-width", initial-scale="1">
        <title>Expediente Dental</title> 
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
        <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
@@ -126,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="buttonadd" id="add-another">Agregar otro diente</button>
+                        <button id="add-another" class="buttonadd">Agregar</button>
                         <br>
                         <div class="field">
                             <br>
@@ -138,7 +139,7 @@
 
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-primary" action="">Save</button>
+                                <button class="button is-primary" id="btn_save">Save</button>
                             </div>
                             {% if expediented %}
                                 <div class="control">
@@ -159,5 +160,6 @@
 
             </div>
         </section>
+
     </body>
 </html>

@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Profile, Perfil
+from .models import User, Profile, Perfil, ExpedienteD
 
 class LoginForm (forms.Form):
     username = forms.CharField(
@@ -66,3 +66,5 @@ class PerfilForm(ModelForm):
 		model = Perfil
 		fields = '__all__'
 		exclude = ['user']
+		
+		

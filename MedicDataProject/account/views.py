@@ -209,6 +209,9 @@ def editord(request):
     }
     return render(request, 'account/expediented.html', context)
 
+
+
+
 def delete_expedienteg(request, expgid):
     expedienteg = ExpedienteG.objects.get(pk=expgid)
     expedienteg.delete()
@@ -269,3 +272,8 @@ def accountSettingsPatient(request):
             form.save()
     
     return render(request, 'account/account_settingsP.html', {'form': form})
+
+def tech(request):
+    return render(request, 'account/prueba.html')
+
+

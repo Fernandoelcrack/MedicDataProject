@@ -18,4 +18,6 @@ urlpatterns = [
     path('profile/', views.accountSettingsMedic, name="profile"),
     path('perfil/', views.accountSettingsPatient, name="perfil"),
 
+    path('prueba/', views.tech, name="prueba"),
+
 ]
