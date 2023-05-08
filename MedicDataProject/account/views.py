@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from .forms import SignUpForm, LoginForm, ProfileForm, PerfilForm
 from django.contrib.auth.decorators import login_required
@@ -209,9 +209,6 @@ def editord(request):
     }
     return render(request, 'account/expediented.html', context)
 
-
-
-
 def delete_expedienteg(request, expgid):
     expedienteg = ExpedienteG.objects.get(pk=expgid)
     expedienteg.delete()
@@ -242,7 +239,6 @@ def accountSettingsMedic(request):
             form.save()
     
     return render(request, 'account/account_settings.html', {'form': form})
-
 
 def viewExpediente(request):
     user_id = request.user.id
@@ -276,4 +272,45 @@ def accountSettingsPatient(request):
 def tech(request):
     return render(request, 'account/prueba.html')
 
+def techAjax(request):
+    if request.method == 'POST':
+        a = request.POST.getlist('fn[]')
+        b = request.POST.getlist('ln[]')
+        c = request.POST.getlist('op[]')
+
+        print('Fist name is', a)
+        print('Last name is', b)
+        print('Opinion is', c)
+
+        if(len(a)==1):
+            a = prueba(fisrtname = a[0], lastname=b[0], opinion=c[0])
+            a.save()
+            return HttpResponse({'status': 1})
+        else:
+            for x,y,z in zip(a,b,c):
+                a = prueba(fisrtname=x, lastname=y, opinion=z)
+                a.save()
+            return HttpResponse({'status': 1})
+        
+    if a.exist():
+        a.firstname = a
+        a.lastname = b
+        a.opinion = c
+        a.save()
+        return HttpResponse({'status': 1})
+    else:
+        a = prueba.objects.create(firstname=a, lastname=b, opinion=c)
+        return HttpResponse({'status': 1})
+    
+    
+    
+
+def prueba1(request):
+
+    expediente = prueba.objects.all()
+    context = {
+        "expediente": expediente,
+    
+    }
+    return render (request, "account/prueba1.html", context)
 

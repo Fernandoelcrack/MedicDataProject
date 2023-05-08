@@ -91,4 +91,13 @@ class Perfil(models.Model):
     profile_pic = models.ImageField(default="perfil1.png", null=True, blank=True)
 
     def __str__(self):
-        return self.nombre       
+        return self.nombre   
+
+
+class prueba(models.Model):
+    fisrtname = models.CharField(max_length=255, verbose_name='Nombre del usuario')
+    lastname = models.CharField(max_length=255, verbose_name='Apellidos del paciente')
+    opinion = models.CharField(max_length=255, verbose_name='opinion')
+
+    def __str__(self):
+        return self.fisrtname 
