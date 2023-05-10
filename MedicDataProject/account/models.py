@@ -12,6 +12,7 @@ class User (AbstractUser):
 class ExpedienteG(models.Model):
     idEg = models.AutoField(primary_key=True)
     nombreG = models.CharField(max_length=255, verbose_name='Nombre del paciente')
+    edadG = models.CharField(max_length=255, verbose_name='Edad del paciente')
     peso = models.CharField(max_length=20, verbose_name='Talla')
     operaciones = models.CharField(max_length=255, verbose_name='Operaciones')
     lesiones=models.CharField(max_length=255, verbose_name='Lesiones')
@@ -33,6 +34,7 @@ class ExpedienteG(models.Model):
 class ExpedienteO(models.Model):
     idEo = models.AutoField(primary_key=True)
     nombreO = models.CharField(max_length=255, verbose_name='Nombre del paciente')
+    edadO = models.CharField(max_length=255, verbose_name='Edad del paciente')
     gojoD=models.CharField(max_length=255, verbose_name="Graduacion ojo derecho")
     gojoI=models.CharField(max_length=255, verbose_name="Graduacion ojo izquierdo")
     padecimientos=models.CharField(max_length=255, verbose_name="Padecimientos")
@@ -51,12 +53,17 @@ class ExpedienteO(models.Model):
 class ExpedienteD(models.Model):
     idEd = models.AutoField(primary_key=True)
     nombreD = models.CharField(max_length=255, verbose_name='Nombre del paciente')
-    NDiente = models.CharField(max_length=255, verbose_name='Nombre del diente')
-    Descripcion= models.CharField(max_length=255, verbose_name="Descripcion")
+    edadD = models.CharField(max_length=255, verbose_name='Edad del paciente')
+    NDiente1 = models.CharField(max_length=255, verbose_name='Nombre del diente1')
+    NDiente2 = models.CharField(max_length=255, verbose_name='Nombre del diente2')
+    NDiente3 = models.CharField(max_length=255, verbose_name='Nombre del diente3')
+    NDiente4 = models.CharField(max_length=255, verbose_name='Nombre del diente4')
+    NDiente5 = models.CharField(max_length=255, verbose_name='Nombre del diente5')
+    Descripcion= models.CharField(max_length=550, verbose_name="Descripcion")
     fechaD=models.DateTimeField(auto_now_add=True)
     fecha_actD=models.DateField(auto_now=True)
     idPg = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario paciente', related_name='paciented')
-    idDd = models.OneToOneField(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario doctor', related_name='doctord')
+    idDd = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, verbose_name='Usuario doctor', related_name='doctord')
 
     class Meta:
         ordering=('nombreD',)
@@ -92,12 +99,3 @@ class Perfil(models.Model):
 
     def __str__(self):
         return self.nombre   
-
-
-class prueba(models.Model):
-    fisrtname = models.CharField(max_length=255, verbose_name='Nombre del usuario')
-    lastname = models.CharField(max_length=255, verbose_name='Apellidos del paciente')
-    opinion = models.CharField(max_length=255, verbose_name='opinion')
-
-    def __str__(self):
-        return self.fisrtname 

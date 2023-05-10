@@ -73,6 +73,7 @@ def editorg(request):
     if request.method == 'POST':
         expgid = int(request.POST.get('expgid'))
         nombreG = request.POST.get('nombreG')
+        edadG = request.POST.get('edadG')
         peso = request.POST.get('peso')
         operaciones = request.POST.get('operaciones')
         lesiones = request.POST.get('lesiones')
@@ -87,6 +88,7 @@ def editorg(request):
         if expedienteg.exists():
             expedienteg = ExpedienteG.objects.get(pk=expgid)
             expedienteg.nombreG = nombreG
+            expedienteg.edadG = edadG
             expedienteg.peso = peso
             expedienteg.operaciones = operaciones
             expedienteg.lesiones = lesiones
@@ -99,7 +101,7 @@ def editorg(request):
             print('1', expedienteg.idEg)
             return redirect('/expedienteg?expgid=%i' % expgid) 
         else:
-            expedienteg = ExpedienteG.objects.create(nombreG=nombreG, peso=peso, operaciones=operaciones, lesiones=lesiones, alergias=alergias, enfermedades=enfermedades, tipoSangre=tipoSangre, idPg=User.objects.get(username = idPg), idDg=idDg) 
+            expedienteg = ExpedienteG.objects.create(nombreG=nombreG, edadG=edadG, peso=peso, operaciones=operaciones, lesiones=lesiones, alergias=alergias, enfermedades=enfermedades, tipoSangre=tipoSangre, idPg=User.objects.get(username = idPg), idDg=idDg) 
 
             return redirect('/expedienteg?expgid=%i' % expedienteg.idEg)
         
@@ -129,6 +131,7 @@ def editoro(request):
     if request.method == 'POST':
         expoid = int(request.POST.get('expoid'))
         nombreO = request.POST.get('nombreO')
+        edadO = request.POST.get('edadO')
         gojoD = request.POST.get('gojoD')
         gojoI = request.POST.get('gojoI')
         padecimientos = request.POST.get('padecimientos')
@@ -138,6 +141,7 @@ def editoro(request):
         if expedienteo.exists():
             #expedienteo = ExpedienteO.objects.get(pk=expoid)
             expedienteo.nombreO = nombreO
+            expedienteo.edadO = edadO
             expedienteo.gojoD = gojoD
             expedienteo.gojoI = gojoI
             expedienteo.padecimientos = padecimientos
@@ -148,7 +152,7 @@ def editoro(request):
 
             return redirect('/expedienteo?expoid=%i' % expoid)
         else:
-            expedienteo = ExpedienteO.objects.create(nombreO=nombreO, gojoD = gojoD, gojoI = gojoI, padecimientos = padecimientos, cambioMicas = cambioMicas, idPg=User.objects.get(username = idPg), idDo=idDo)  
+            expedienteo = ExpedienteO.objects.create(nombreO=nombreO, edadO=edadO, gojoD = gojoD, gojoI = gojoI, padecimientos = padecimientos, cambioMicas = cambioMicas, idPg=User.objects.get(username = idPg), idDo=idDo)  
 
             return redirect('/expedienteo?expoid=%i' % expedienteo.idEo)
 
@@ -164,50 +168,6 @@ def editoro(request):
     }
     return render(request, 'account/expedienteo.html', context)
 
-def editord(request):
-    expdid = 0
-    try:
-        expdid = int(request.GET.get('expdid'))
-    except:
-        pass
-    expediented = ExpedienteD.objects.filter(idEd = expdid)
-    #idDd = User.objects.get(id = request.user)
-    idDd = request.user
-    expedientesd = ExpedienteD.objects.filter(idDd_id = idDd)
-
-    if request.method == 'POST':
-        expdid = int(request.POST.get('expdid'))
-        nombreD = request.POST.get('nombreD')
-        NDiente = request.POST.get('NDiente')
-        Descripcion = request.POST.get('Descripcion')
-        idPg = request.POST.get('idPg')
-    
-        if expediented.exists():
-            #expediented = ExpedienteD.objects.get(pk=expdid)
-            expediented.nombreD = nombreD
-            expediented.NDiente = NDiente
-            expediented.Descripcion = Descripcion
-            expediented.idPg = User.objects.get(username = idPg)
-            expediented.idDd = idDd
-            expediented.save()
-
-            return redirect('/expediented?expdid=%i' % expdid)
-        else:
-            expediented = ExpedienteD.objects.create(nombreD=nombreD, NDiente = NDiente, Descripcion = Descripcion, idPg=User.objects.get(username = idPg), idDd=idDd) 
-
-            return redirect('/expediented?expdid=%i' % expediented.idEd)
-
-    if expdid > 0:
-        expediented = ExpedienteD.objects.get(pk=expdid)
-    else:
-        expediented = ''
-
-    context = {
-        'expdid': expdid,
-        'expedientesd' : expedientesd,
-        'expediented' : expediented,
-    }
-    return render(request, 'account/expediented.html', context)
 
 def delete_expedienteg(request, expgid):
     expedienteg = ExpedienteG.objects.get(pk=expgid)
@@ -269,48 +229,61 @@ def accountSettingsPatient(request):
     
     return render(request, 'account/account_settingsP.html', {'form': form})
 
-def tech(request):
-    return render(request, 'account/prueba.html')
 
-def techAjax(request):
+def editord(request):
+    expdid = 0
+    try:
+        expdid = int(request.GET.get('expdid'))
+    except:
+        pass
+    expediented = ExpedienteD.objects.filter(idEd = expdid)
+    idDd = User.objects.get(id = request.user.id)
+    expedientesd = ExpedienteD.objects.filter(idDd_id = idDd)
+
     if request.method == 'POST':
-        a = request.POST.getlist('fn[]')
-        b = request.POST.getlist('ln[]')
-        c = request.POST.getlist('op[]')
-
-        print('Fist name is', a)
-        print('Last name is', b)
-        print('Opinion is', c)
-
-        if(len(a)==1):
-            a = prueba(fisrtname = a[0], lastname=b[0], opinion=c[0])
-            a.save()
-            return HttpResponse({'status': 1})
+        expdid = int(request.POST.get('expdid'))
+        nombreD = request.POST.get('nombreD')
+        edadD = request.POST.get('edadD')
+        NDiente1 = request.POST.get('NDiente1')
+        NDiente2 = request.POST.get('NDiente2')
+        NDiente3 = request.POST.get('NDiente3')
+        NDiente4 = request.POST.get('NDiente4')
+        NDiente5 = request.POST.get('NDiente5')
+        Descripcion = request.POST.get('Descripcion')
+        idPg = request.POST.get('idPg')
+        print(idPg)
+        idPg = User.objects.get(username = idPg)
+        print(idPg)
+    
+        if expediented.exists():
+            #expediented = ExpedienteD.objects.get(pk=expdid)
+            expediented.nombreD = nombreD
+            expediented.edadD = edadD
+            expediented.NDiente1 = NDiente1
+            expediented.NDiente2 = NDiente2
+            expediented.NDiente3 = NDiente3
+            expediented.NDiente4 = NDiente4
+            expediented.NDiente5 = NDiente5
+            expediented.Descripcion = Descripcion
+            expediented.idPg = idPg
+            expediented.idDd = idDd
+            expediented.save()
+            print('1', expediented.idEd)
+            return redirect('/expediented?expdid=%i' % expdid) 
         else:
-            for x,y,z in zip(a,b,c):
-                a = prueba(fisrtname=x, lastname=y, opinion=z)
-                a.save()
-            return HttpResponse({'status': 1})
+            expediented = ExpedienteD.objects.create(nombreD=nombreD, edadD=edadD, NDiente1=NDiente1, NDiente2=NDiente2, NDiente3=NDiente3, NDiente4=NDiente4, NDiente5=NDiente5, Descripcion=Descripcion, idPg=User.objects.get(username = idPg), idDd=idDd)  
+
+            return redirect('/expediented?expdid=%i' % expediented.idEd)
         
-    if a.exist():
-        a.firstname = a
-        a.lastname = b
-        a.opinion = c
-        a.save()
-        return HttpResponse({'status': 1})
+    if expdid > 0:
+        expediented = ExpedienteD.objects.get(pk=expdid)
     else:
-        a = prueba.objects.create(firstname=a, lastname=b, opinion=c)
-        return HttpResponse({'status': 1})
-    
-    
-    
+        expediented = ''
 
-def prueba1(request):
-
-    expediente = prueba.objects.all()
     context = {
-        "expediente": expediente,
-    
+        'expdid': expdid,
+        'expedientesd' : expedientesd,
+        'expediented' : expediented,
     }
-    return render (request, "account/prueba1.html", context)
 
+    return render(request, 'account/expediented.html', context)

@@ -17,9 +17,7 @@ urlpatterns = [
     path('delete_expediented/<int:expdid>/', views.delete_expediented, name='delete_expediented'),
     path('profile/', views.accountSettingsMedic, name="profile"),
     path('perfil/', views.accountSettingsPatient, name="perfil"),
-    path('prueba/', views.tech, name="prueba"),
-    path('prueba/ajax/', views.techAjax, name="techAjax"),
-    path('prueba1/', views.prueba1, name="prueba1"),
+
 
 
 ]

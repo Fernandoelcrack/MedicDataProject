@@ -64,10 +64,20 @@
                                 <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
                             </div>
                         </div>
+
                         <label class="label">Nombre del Paciente</label>
                         <div class="control">
                             <input type="text" class="input" name="nombreG" placeholder="Nombre del Paciente"{% if expedienteg %} value="{{ expedienteg.nombreG }}"{% endif %}>
                         </div>
+
+                        <div class="field">
+                            <label class="label">Edad</label>
+                            <div class="control">
+                                <input type="text" class="input" name="edadG" placeholder="Edad"{% if expedienteg %} value="{{ expedienteg.edadG }}"{% endif %}>
+                            </div>
+                        </div>
+
+
                         <div class="field">
                             <label class="label">Peso</label>
                             <div class="control">
@@ -105,10 +115,25 @@
 
                         <div class="field">
                             <label class="label">Tipo de Sangre</label>
+                            <select name="tipoSangre" class="control">
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                        {% if expedienteg %}
+                        <div class="field">
+                            <label class="label">Tipo de sangre</label>
                             <div class="control">
-                                <input type="text" class="input" name="tipoSangre" placeholder="TipoSangre"{% if expedienteg %} value="{{ expedienteg.tipoSangre }}"{% endif %}>
+                                <input type="text" class="input" name="tipoSangre" placeholder="Tipo de Sangre"{% if expedienteg %} value="{{ expedienteg.tipoSangre }}"{% endif %}>
                             </div>
                         </div>
+                        {% endif %}
 
                         <div class="field">
                             <label class="label">Usuario del Paciente</label>

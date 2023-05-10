@@ -51,16 +51,31 @@
                         <input type="hidden" name="expoid" value="{{ expoid }}">
 
                         <div class="field">
-                            <label class="label">Nombre del Paciente
+                            <label class="label">
                                 {% if expedienteo %}
                                     <span class="has-text-grey-light">
                                         Created at: {{ expedienteo.fechaO|date:"m/d Y" }} / Modified at: {{ expedienteo.fecha_actO|date:"m/d Y" }}
                                     </span>
                                 {% endif %}
                             </label>
-
+                            <br>
+                            <label class="label">Nombre del Médico</label>
                             <div class="control">
-                                <input type="text" class="input" name="nombreO" placeholder="Nombre del Paciente"{% if expedienteo %} value="{{ expedienteo.nombreO }}"{% endif %}>
+                                <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Nombre del paciente</label>
+                            <div class="control">
+                                <input type="text" class="input" name="nombreO" placeholder="Nombre del paciente"{% if expedienteo %} value="{{ expedienteo.nombreO}}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Edad</label>
+                            <div class="control">
+                                <input type="text" class="input" name="edadO" placeholder="Edad"{% if expedienteo %} value="{{ expedienteo.edadO }}"{% endif %}>
                             </div>
                         </div>
 
