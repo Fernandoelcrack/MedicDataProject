@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            rel="shortcut icon"
+            href="{% static 'IconoJAYMO.ico' %}"
+            type="image/x-icon"
+        />
+       <meta charset="utf-8">
+       <meta name="viewport" content="width-device-width", initial-scale="1">
+       <title>Expediente Dental</title> 
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+    </head>
+    <style>
+        
+        .anatomia{
+                max-width: 500px;
+                max-height:500px;
+                margin: 0 auto;
+                
+            }
+
+        .margen{
+            border: rgba(0, 0, 0, 0.131) 1px solid;
+            margin: 10px;
+            padding: 20px;
+        }
+        .buttonadd{
+            background-color: #9fd0e9;
+            font-size: 13px;
+            border-radius: 12px;
+            border:rgb(255, 255, 255);
+            float: right;
+            font-family: 'Montserrat', sans-serif;
+            padding: 9px;
+            color:rgb(0, 0, 0);
+            text-align: center;
+        }
+
+        
+    </style>
+    <body>
+        <nav class="navbar is-dark">
+            <div class="navbar-brand">
+                <a href="{& url 'expediented' %}" class="navbar-item">Expediente Dental</a>
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="{% url 'expediented' %}?expdid=0" class="navbar-item">Nuevo Expediente Dental</a>
+                </div>
+                <div class="navbar-end">
+                    <a href="{% url 'doctor' %}" class="navbar-item">Regresar</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-2">
+                    <aside class="menu">
+                        <p class="menu-label">Expediente Dental</p>
+
+                        <ul class="menu-list">
+                            {% for expd in expedientesd %}
+                                <li>
+                                    <a href="{% url 'expediented' %}?expdid={{ expd.idEd }}">{{ expd.nombreD }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="column is-7">
+                    <form method="post" action="{% url 'expediented' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="expdid" value="{{ expdid }}">
+                        
+                        <div class="field">
+                            <label class="label">
+                            {% if expediented %}
+                                    <span class="has-text-grey-light">
+                                        Created at: {{ expediented.fechaD|date:"m/d Y" }} / Modified at: {{ expediented.fecha_actD|date:"m/d Y" }}
+                                    </span>
+                                {% endif %}
+                            </label>
+                            <br>
+                            <label class="label">Nombre del Médico
+                            </label>
+                            
+                            <div class="control">
+                                <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
+                            </div>
+                        </div>
+                        <label class="label">Nombre del Paciente</label>
+                        <div class="field">
+                            <div class="control">
+                                <input type="text" class="input" name="nombreD" placeholder="Nombre del Paciente"{% if expediented %} value="{{ expediented.nombreD }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <label class="label">Edad del Paciente</label>
+                        <div class="field">
+                            <div class="control">
+                                <input type="text" class="input" name="edadD" placeholder="edad del Paciente"{% if expediented %} value="{{ expediented.edadD }}"{% endif %}>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="margen column is-3">
+                            
+                            <div class="field">
+                                <label class="label">Numero y Nombre del diente</label>
+                                <select name="NDiente1" class="control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="1. Tercer Molar">1. Tercer Molar</option>
+                                    <option value="2. Segundo Molar">2. Segundo Molar</option>
+                                    <option value="3. Primer Molar">3. Primer Molar</option>
+                                    <option value="4. Segundo premolar">4. Segundo premolar</option>
+                                    <option value="5. Primer Premolar">5. Primer Premolar</option>
+                                    <option value="6. Canino">6. Canino</option>
+                                    <option value="7. Incisivo Lateral">7. Incisivo Lateral</option>
+                                    <option value="8. Incisivo central">8. Incisivo central</option>
+                                    <option value="9. Incisivo central">9. Incisivo central</option>
+                                    <option value="10. Incisivo Lateral">10. Incisivo Lateral</option>
+                                    <option value="11. Canino">11. Canino</option>
+                                    <option value="12. Primer Premolar">12. Primer Premolar</option>
+                                    <option value="13. Segundo premolar">13. Segundo premolar</option>
+                                    <option value="14. Tercer Molar">14. Tercer Molar</option>
+                                    <option value="15. Segundo Molar">15. Segundo Molar</option>
+                                    <option value="16. Tercer Molar">16. Tercer Molar</option>
+
+                                    <option value="17. Tercer Molar">17. Tercer Molar</option>
+                                    <option value="18. Segundo Molar">18. Segundo Molar</option>
+                                    <option value="19. Tercer Molar">19. Tercer Molar</option>
+                                    <option value="20. Segundo premolar">20. Segundo premolar</option>
+                                    <option value="21. Primer Premolar">21. Primer Premolar</option>
+                                    <option value="22. Canino">22. Canino</option>
+                                    <option value="23. Incisivo Lateral">23. Incisivo Lateral</option>
+                                    <option value="24. Incisivo central">24. Incisivo central</option>
+                                    <option value="25. Incisivo central">25. Incisivo central</option>
+                                    <option value="26. Incisivo Lateral">26. Incisivo Lateral</option>
+                                    <option value="27. Canino">27. Canino</option>
+                                    <option value="28. Primer Premolar">28. Primer Premolar</option>
+                                    <option value="29. Segundo premolar">29. Segundo premolar</option>
+                                    <option value="30. Tercer Molar">30. Tercer Molar</option>
+                                    <option value="31. Segundo Molar">31. Segundo Molar</option>
+                                    <option value="32. Tercer Molar">32. Tercer Molar</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Numero y Nombre del diente</label>
+                                <select name="NDiente2" class="control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="1. Tercer Molar">1. Tercer Molar</option>
+                                    <option value="2. Segundo Molar">2. Segundo Molar</option>
+                                    <option value="3. Primer Molar">3. Primer Molar</option>
+                                    <option value="4. Segundo premolar">4. Segundo premolar</option>
+                                    <option value="5. Primer Premolar">5. Primer Premolar</option>
+                                    <option value="6. Canino">6. Canino</option>
+                                    <option value="7. Incisivo Lateral">7. Incisivo Lateral</option>
+                                    <option value="8. Incisivo central">8. Incisivo central</option>
+                                    <option value="9. Incisivo central">9. Incisivo central</option>
+                                    <option value="10. Incisivo Lateral">10. Incisivo Lateral</option>
+                                    <option value="11. Canino">11. Canino</option>
+                                    <option value="12. Primer Premolar">12. Primer Premolar</option>
+                                    <option value="13. Segundo premolar">13. Segundo premolar</option>
+                                    <option value="14. Tercer Molar">14. Tercer Molar</option>
+                                    <option value="15. Segundo Molar">15. Segundo Molar</option>
+                                    <option value="16. Tercer Molar">16. Tercer Molar</option>
+
+                                    <option value="17. Tercer Molar">17. Tercer Molar</option>
+                                    <option value="18. Segundo Molar">18. Segundo Molar</option>
+                                    <option value="19. Tercer Molar">19. Tercer Molar</option>
+                                    <option value="20. Segundo premolar">20. Segundo premolar</option>
+                                    <option value="21. Primer Premolar">21. Primer Premolar</option>
+                                    <option value="22. Canino">22. Canino</option>
+                                    <option value="23. Incisivo Lateral">23. Incisivo Lateral</option>
+                                    <option value="24. Incisivo central">24. Incisivo central</option>
+                                    <option value="25. Incisivo central">25. Incisivo central</option>
+                                    <option value="26. Incisivo Lateral">26. Incisivo Lateral</option>
+                                    <option value="27. Canino">27. Canino</option>
+                                    <option value="28. Primer Premolar">28. Primer Premolar</option>
+                                    <option value="29. Segundo premolar">29. Segundo premolar</option>
+                                    <option value="30. Tercer Molar">30. Tercer Molar</option>
+                                    <option value="31. Segundo Molar">31. Segundo Molar</option>
+                                    <option value="32. Tercer Molar">32. Tercer Molar</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Numero y Nombre del diente</label>
+                                <select name="NDiente3" class="control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="1. Tercer Molar">1. Tercer Molar</option>
+                                    <option value="2. Segundo Molar">2. Segundo Molar</option>
+                                    <option value="3. Primer Molar">3. Primer Molar</option>
+                                    <option value="4. Segundo premolar">4. Segundo premolar</option>
+                                    <option value="5. Primer Premolar">5. Primer Premolar</option>
+                                    <option value="6. Canino">6. Canino</option>
+                                    <option value="7. Incisivo Lateral">7. Incisivo Lateral</option>
+                                    <option value="8. Incisivo central">8. Incisivo central</option>
+                                    <option value="9. Incisivo central">9. Incisivo central</option>
+                                    <option value="10. Incisivo Lateral">10. Incisivo Lateral</option>
+                                    <option value="11. Canino">11. Canino</option>
+                                    <option value="12. Primer Premolar">12. Primer Premolar</option>
+                                    <option value="13. Segundo premolar">13. Segundo premolar</option>
+                                    <option value="14. Tercer Molar">14. Tercer Molar</option>
+                                    <option value="15. Segundo Molar">15. Segundo Molar</option>
+                                    <option value="16. Tercer Molar">16. Tercer Molar</option>
+
+                                    <option value="17. Tercer Molar">17. Tercer Molar</option>
+                                    <option value="18. Segundo Molar">18. Segundo Molar</option>
+                                    <option value="19. Tercer Molar">19. Tercer Molar</option>
+                                    <option value="20. Segundo premolar">20. Segundo premolar</option>
+                                    <option value="21. Primer Premolar">21. Primer Premolar</option>
+                                    <option value="22. Canino">22. Canino</option>
+                                    <option value="23. Incisivo Lateral">23. Incisivo Lateral</option>
+                                    <option value="24. Incisivo central">24. Incisivo central</option>
+                                    <option value="25. Incisivo central">25. Incisivo central</option>
+                                    <option value="26. Incisivo Lateral">26. Incisivo Lateral</option>
+                                    <option value="27. Canino">27. Canino</option>
+                                    <option value="28. Primer Premolar">28. Primer Premolar</option>
+                                    <option value="29. Segundo premolar">29. Segundo premolar</option>
+                                    <option value="30. Tercer Molar">30. Tercer Molar</option>
+                                    <option value="31. Segundo Molar">31. Segundo Molar</option>
+                                    <option value="32. Tercer Molar">32. Tercer Molar</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Numero y Nombre del diente</label>
+                                <select name="NDiente4" class="control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="1. Tercer Molar">1. Tercer Molar</option>
+                                    <option value="2. Segundo Molar">2. Segundo Molar</option>
+                                    <option value="3. Primer Molar">3. Primer Molar</option>
+                                    <option value="4. Segundo premolar">4. Segundo premolar</option>
+                                    <option value="5. Primer Premolar">5. Primer Premolar</option>
+                                    <option value="6. Canino">6. Canino</option>
+                                    <option value="7. Incisivo Lateral">7. Incisivo Lateral</option>
+                                    <option value="8. Incisivo central">8. Incisivo central</option>
+                                    <option value="9. Incisivo central">9. Incisivo central</option>
+                                    <option value="10. Incisivo Lateral">10. Incisivo Lateral</option>
+                                    <option value="11. Canino">11. Canino</option>
+                                    <option value="12. Primer Premolar">12. Primer Premolar</option>
+                                    <option value="13. Segundo premolar">13. Segundo premolar</option>
+                                    <option value="14. Tercer Molar">14. Tercer Molar</option>
+                                    <option value="15. Segundo Molar">15. Segundo Molar</option>
+                                    <option value="16. Tercer Molar">16. Tercer Molar</option>
+
+                                    <option value="17. Tercer Molar">17. Tercer Molar</option>
+                                    <option value="18. Segundo Molar">18. Segundo Molar</option>
+                                    <option value="19. Tercer Molar">19. Tercer Molar</option>
+                                    <option value="20. Segundo premolar">20. Segundo premolar</option>
+                                    <option value="21. Primer Premolar">21. Primer Premolar</option>
+                                    <option value="22. Canino">22. Canino</option>
+                                    <option value="23. Incisivo Lateral">23. Incisivo Lateral</option>
+                                    <option value="24. Incisivo central">24. Incisivo central</option>
+                                    <option value="25. Incisivo central">25. Incisivo central</option>
+                                    <option value="26. Incisivo Lateral">26. Incisivo Lateral</option>
+                                    <option value="27. Canino">27. Canino</option>
+                                    <option value="28. Primer Premolar">28. Primer Premolar</option>
+                                    <option value="29. Segundo premolar">29. Segundo premolar</option>
+                                    <option value="30. Tercer Molar">30. Tercer Molar</option>
+                                    <option value="31. Segundo Molar">31. Segundo Molar</option>
+                                    <option value="32. Tercer Molar">32. Tercer Molar</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Numero y Nombre del diente</label>
+                                <select name="NDiente5" class="control">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="1. Tercer Molar">1. Tercer Molar</option>
+                                    <option value="2. Segundo Molar">2. Segundo Molar</option>
+                                    <option value="3. Primer Molar">3. Primer Molar</option>
+                                    <option value="4. Segundo premolar">4. Segundo premolar</option>
+                                    <option value="5. Primer Premolar">5. Primer Premolar</option>
+                                    <option value="6. Canino">6. Canino</option>
+                                    <option value="7. Incisivo Lateral">7. Incisivo Lateral</option>
+                                    <option value="8. Incisivo central">8. Incisivo central</option>
+                                    <option value="9. Incisivo central">9. Incisivo central</option>
+                                    <option value="10. Incisivo Lateral">10. Incisivo Lateral</option>
+                                    <option value="11. Canino">11. Canino</option>
+                                    <option value="12. Primer Premolar">12. Primer Premolar</option>
+                                    <option value="13. Segundo premolar">13. Segundo premolar</option>
+                                    <option value="14. Tercer Molar">14. Tercer Molar</option>
+                                    <option value="15. Segundo Molar">15. Segundo Molar</option>
+                                    <option value="16. Tercer Molar">16. Tercer Molar</option>
+
+                                    <option value="17. Tercer Molar">17. Tercer Molar</option>
+                                    <option value="18. Segundo Molar">18. Segundo Molar</option>
+                                    <option value="19. Tercer Molar">19. Tercer Molar</option>
+                                    <option value="20. Segundo premolar">20. Segundo premolar</option>
+                                    <option value="21. Primer Premolar">21. Primer Premolar</option>
+                                    <option value="22. Canino">22. Canino</option>
+                                    <option value="23. Incisivo Lateral">23. Incisivo Lateral</option>
+                                    <option value="24. Incisivo central">24. Incisivo central</option>
+                                    <option value="25. Incisivo central">25. Incisivo central</option>
+                                    <option value="26. Incisivo Lateral">26. Incisivo Lateral</option>
+                                    <option value="27. Canino">27. Canino</option>
+                                    <option value="28. Primer Premolar">28. Primer Premolar</option>
+                                    <option value="29. Segundo premolar">29. Segundo premolar</option>
+                                    <option value="30. Tercer Molar">30. Tercer Molar</option>
+                                    <option value="31. Segundo Molar">31. Segundo Molar</option>
+                                    <option value="32. Tercer Molar">32. Tercer Molar</option>
+                                </select>
+                            </div>
+                        
+
+                            <div class="field">
+                                <label class="label">Descripcion</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="Descripcion" placeholder="Descripcion"{% if expediented %} value="{{ expediented.Descripcion }}"{% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                        {% if expediented %}
+
+                        <div class="margen column is-4">
+                            <div class="field">
+                                <label class="label">Diente 1</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="verdiente1" placeholder=""{% if expediented %} value="{{ expediented.NDiente1 }}"{% endif %}>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Diente 2</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="verdiente2" placeholder=""{% if expediented %} value="{{ expediented.NDiente2 }}"{% endif %}>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Diente 3</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="verdiente3" placeholder=""{% if expediented %} value="{{ expediented.NDiente3 }}"{% endif %}>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Diente 4</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="verdiente4" placeholder=""{% if expediented %} value="{{ expediented.NDiente4 }}"{% endif %}>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Diente 5</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="verdiente5" placeholder=""{% if expediented %} value="{{ expediented.NDiente5 }}"{% endif %}>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                
+                        <div class="field">
+                            <br>
+                            <label class="label">Usuario del Paciente</label>
+                            <div class="control">
+                                <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expediented %} value="{{ expediented.idPg }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-primary" id="btn_save">Save</button>
+                            </div>
+                            {% if expediented %}
+                                <div class="control">
+                                    <a href="{% url 'delete_expediented' expediented.idEd %}" class="button is-danger">Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+                <div class="column is-3">
+                        
+                        <br><br>
+                        <center><img class= "anatomia" src="{% static 'anatomiadientes.gif' %}"></center>
+                    
+                    
+                </div>
+
+            </div>
+        </section>
+
+    </body>
+</html>

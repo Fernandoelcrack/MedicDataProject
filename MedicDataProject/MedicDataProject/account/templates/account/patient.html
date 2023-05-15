@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Paciente</title>
+  <link rel="stylesheet" href="{% static 'sidemenu.css' %}">
+  <link rel="stylesheet" href="{% static 'tabla.css' %}">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="sidemenu" class="menu-collapsed">
+    <div id="header">
+      <div id="title"><span>Mi perfil</span></div>
+      <div id="menu-btn">
+        <div class="btn-hamburger"></div>
+        <div class="btn-hamburger"></div>
+        <div class="btn-hamburger"></div>
+      </div>
+    </div>
+
+    <div id="profile">
+      <div id="photo"><img src="{{request.user.perfil.profile_pic.url}}" alt="">
+        <div id="name"><span>{{ user }}</span>
+          <hr>
+          <a href="{% url 'perfil' %}" align="center">Ver mi perfil</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-items">
+      <div class="item">
+        <a href="#general">
+          <div class="icon"><img src="{% static 'expediente.png' %}" alt=""></div>
+          <div class="title"><span>Expediente General</span></div>
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#dental">
+          <div class="icon"><img src="{% static 'diente.png' %}" alt=""></div>
+          <div class="title"><span>Expediente Dental</span></div>
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#ocular">
+          <div class="icon"><img src="{% static 'ver.png' %}" alt=""></div>
+          <div class="title"><span>Expediente Ocular</span></div>
+        </a>
+
+      </div>
+      <div class="item">
+        <a href="/logout/">
+          <div class="title"><span>Salir</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-container">
+    {% if expediente %}
+
+    <table class="tablegeneral" id="general">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Peso</th>
+          <th scope="col">Lesiones</th>
+          <th scope="col">Alergias</th>
+          <th scope="col">Tipo de sangre</th>
+          <th scope="col">Paciente</th>
+          <th scope="col">Doctor</th>
+          <th scope="col">Fecha de creación</th>
+          <th scope="col">Fecha de Modificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expediente in expediente %}
+        <tr>
+          <td scope="row"> {{ expediente.nombreG }} </th>
+          <td>{{ expediente.peso }}</td>
+          <td>{{ expediente.lesiones }}</td>
+          <td>{{ expediente.alergias }}</td>
+          <td>{{ expediente.tipoSangre }}</td>
+          <td>{{ expediente.idPg }}</td>
+          <td>{{ expediente.idDg }}</td>
+          <td>{{ expediente.fecha }}</td>
+          <td>{{ expediente.fecha_actG }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    {% endif %}
+
+    <div>
+      {% if expediented %}
+      <table class="tabledental" id="dental">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Numero de diente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de Modificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expediented in expediented %}
+          <tr>
+            <td scope="row"> {{ expediented.nombreD }}</th>
+            <td>{{ expediented.NDiente }}</td>
+            <td>{{ expediented.Descripcion }}</td>
+            <td>{{ expediented.idDd }}</td>
+            <td>{{ expediented.fechaD }}</td>
+            <td>{{ expediented.fecha_actD }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <div>
+      {% if expedienteo %}
+      <table class="tableocular" id="ocular">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Graduacion Ojo derecho</th>
+            <th scope="col">Graduacion Ojo Izquierdo</th>
+            <th scope="col">Padecimientos</th>
+            <th scope="col">Cambio de Micas</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de Modificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expedienteo in expedienteo %}
+          <tr>
+            <td scope="row"> {{ expedienteo.nombreO }}</th>
+            <td>{{ expedienteo.gojoD }}</td>
+            <td>{{ expedienteo.gojoI }}</td>
+            <td>{{ expedienteo.padecimientos }}</td>
+            <td>{{ expedienteo.cambioMicas }}</td>
+            <td>{{ expedienteo.idPg }}</td>
+            <td>{{ expedienteo.idDg }}</td>
+            <td>{{ expedienteo.fechaO }}</td>
+            <td>{{ expedienteo.fecha_actO }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+    const btn = document.querySelector('#menu-btn');
+    const menu = document.querySelector('#sidemenu');
+    btn.addEventListener('click', e => {
+      menu.classList.toggle("menu-expanded");
+      menu.classList.toggle("menu-collapsed");
+      document.querySelector('body').classList.toggle('body-expanded');
+    });
+  </script>
+
+</body>
+
+</html>

@@ -126,11 +126,12 @@
                                 <option value="AB-">AB-</option>
                             </select>
                         </div>
+
                         {% if expedienteg %}
                         <div class="field">
                             <label class="label">Tipo de sangre</label>
                             <div class="control">
-                                <input type="text" class="input" name="tipoSangre" placeholder="Tipo de Sangre"{% if expedienteg %} value="{{ expedienteg.tipoSangre }}"{% endif %}>
+                                <input type="text" class="input" name="mostrarsangre" placeholder="Tipo de Sangre"{% if expedienteg %} value="{{ expedienteg.tipoSangre }}"{% endif %}>
                             </div>
                         </div>
                         {% endif %}
@@ -139,12 +140,14 @@
                             <label class="label">Usuario del Paciente</label>
                             <div class="control">
                                 <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expedienteg %} value="{{ expedienteg.idPg }}"{% endif %}>
+
+                                
                             </div>
                         </div>
 
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-primary" action="">Save</button>
+                                <button id="btnsave" class="button is-primary" action="">Save</button>
                             </div>
                             {% if expedienteg %}
                                 <div class="control">

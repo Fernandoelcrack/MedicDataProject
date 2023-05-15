@@ -4,6 +4,7 @@ from .models import *
 from .forms import SignUpForm, LoginForm, ProfileForm, PerfilForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import TemplateView
 
 # Create your views here.
 def index(request):
@@ -70,6 +71,8 @@ def editorg(request):
     print(idDg)
     expedientesg = ExpedienteG.objects.filter(idDg_id = idDg)
 
+
+    
     if request.method == 'POST':
         expgid = int(request.POST.get('expgid'))
         nombreG = request.POST.get('nombreG')
@@ -82,7 +85,10 @@ def editorg(request):
         tipoSangre = request.POST.get('tipoSangre')
         idPg = request.POST.get('idPg')
         print(idPg)
-        idPg = User.objects.get(username = idPg)
+        try:
+            idPg = User.objects.get(username = idPg)
+        except:
+            pass
         print(idPg)
     
         if expedienteg.exists():
@@ -104,6 +110,7 @@ def editorg(request):
             expedienteg = ExpedienteG.objects.create(nombreG=nombreG, edadG=edadG, peso=peso, operaciones=operaciones, lesiones=lesiones, alergias=alergias, enfermedades=enfermedades, tipoSangre=tipoSangre, idPg=User.objects.get(username = idPg), idDg=idDg) 
 
             return redirect('/expedienteg?expgid=%i' % expedienteg.idEg)
+
         
     if expgid > 0:
         expedienteg = ExpedienteG.objects.get(pk=expgid)
@@ -287,3 +294,19 @@ def editord(request):
     }
 
     return render(request, 'account/expediented.html', context)
+
+
+class Error404View(TemplateView):
+    template_name = "account/error_404.html"
+
+
+class Error500View(TemplateView):
+    template_name = "account/error_500.html"
+    @classmethod
+    def as_error_view(cls):
+        v=cls.as_view()
+        def view(request):
+            r=v(request)
+            r.render()
+            return r
+        return view

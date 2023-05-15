@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+        rel="shortcut icon"
+        href="{% static 'IconoJAYMO.ico' %}"
+        type="image/x-icon"
+        />
+       <meta charset="utf-8">
+       <meta name="viewport" content="width-device-width", initial-scale="1">
+       <title>Expediente Ocular</title> 
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    </head>
+    <body>
+        <nav class="navbar is-black">
+            <div class="navbar-brand">
+                <a href="{& url 'expedienteo' %}" class="navbar-item">Expediente Ocular</a>
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="{% url 'expedienteo' %}?expoid=0" class="navbar-item">Nuevo Expediente Ocular</a>
+                </div>
+                <div class="navbar-end">
+                    <a href="{% url 'doctor' %}" class="navbar-item">Regresar</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-2">
+                    <aside class="menu">
+                        <p class="menu-label">Expediente Ocular</p>
+
+                        <ul class="menu-list">
+                            {% for expo in expedienteso %}
+                                <li>
+                                    <a href="{% url 'expedienteo' %}?expoid={{ expo.idEo }}">{{ expo.nombreO }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="column is-7">
+                    <form method="post" action="{% url 'expedienteo' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="expoid" value="{{ expoid }}">
+
+                        <div class="field">
+                            <label class="label">
+                                {% if expedienteo %}
+                                    <span class="has-text-grey-light">
+                                        Created at: {{ expedienteo.fechaO|date:"m/d Y" }} / Modified at: {{ expedienteo.fecha_actO|date:"m/d Y" }}
+                                    </span>
+                                {% endif %}
+                            </label>
+                            <br>
+                            <label class="label">Nombre del Médico</label>
+                            <div class="control">
+                                <input type="text" class="input" name="nombre" value="{{request.user.profile.nombre}} {{request.user.profile.apellidos}} ">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Nombre del paciente</label>
+                            <div class="control">
+                                <input type="text" class="input" name="nombreO" placeholder="Nombre del paciente"{% if expedienteo %} value="{{ expedienteo.nombreO}}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Edad</label>
+                            <div class="control">
+                                <input type="text" class="input" name="edadO" placeholder="Edad"{% if expedienteo %} value="{{ expedienteo.edadO }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Graduacion ojo Derecho</label>
+                            <div class="control">
+                                <input type="text" class="input" name="gojoD" placeholder="GojoD"{% if expedienteo %} value="{{ expedienteo.gojoD }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Graduacion Ojo Izquierdo</label>
+                            <div class="control">
+                                <input type="text" class="input" name="gojoI" placeholder="GojoI"{% if expedienteo %} value="{{ expedienteo.gojoI }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Padecimientos</label>
+                            <div class="control">
+                                <input type="text" class="input" name="padecimientos" placeholder="Padecimientos"{% if expedienteo %} value="{{ expedienteo.padecimientos }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Cambio de micas</label>
+                            <div class="control">
+                                <input type="text" class="input" name="cambioMicas" placeholder="CambioMicas"{% if expedienteo %} value="{{ expedienteo.cambioMicas }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Usuario del Paciente</label>
+                            <div class="control">
+                                <input type="text" class="input" name="idPg" placeholder="UserPaciente"{% if expedienteo %} value="{{ expedienteo.idPg }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-primary" action="">Save</button>
+                            </div>
+                            {% if expedienteo %}
+                                <div class="control">
+                                    <a href="{% url 'delete_expedienteo' expedienteo.idEo %}" class="button is-danger">Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+                <div class="column is-3">
+                        
+                    <br><br><br><br>
+                    <center>
+                        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                        <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_erdqblci.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player>
+                    </center>
+                </div>
+
+
+            </div>
+        </section>
+    </body>
+</html>
