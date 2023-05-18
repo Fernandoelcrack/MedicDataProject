@@ -129,10 +129,4 @@ AUTH_USER_MODEL = 'account.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://omaya.gerdoc.com/'
-],
 
-CORS_ORIGIN_WHITELIST = [
-    'http://omaya.gerdoc.com/',
-]
