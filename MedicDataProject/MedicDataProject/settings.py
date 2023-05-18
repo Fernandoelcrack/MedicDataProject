@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w611%fjul%*coz!bho!0z$=g3!)lvb4n=m$v74zju2^%3ayrrj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ "http://omaya.gerdoc.com/"]
+ALLOWED_HOSTS = [ "*"]
 
 
 # Application definition
