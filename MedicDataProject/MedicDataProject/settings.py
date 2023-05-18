@@ -167,4 +167,13 @@ CORS_EXPOSE_HEADERS = []
 
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_COOKIE_DOMAIN = [
+    "http://omaya.gerdoc.com/",
+    "http://127.0.0.1:8000/"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://omaya.gerdoc.com/",
+    "http://127.0.0.1:8000/"
+]
 
