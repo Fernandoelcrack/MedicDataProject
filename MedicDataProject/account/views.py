@@ -5,11 +5,14 @@ from .forms import SignUpForm, LoginForm, ProfileForm, PerfilForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+@csrf_exempt 
 def index(request):
     return render(request, 'account/index.html')
 
+@csrf_exempt 
 def register(request):
     msg = None
     if request.method == 'POST':
@@ -24,6 +27,7 @@ def register(request):
         form = SignUpForm()
     return render (request, 'account/register.html', {'form': form, 'msg':msg})
 
+@csrf_exempt 
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
@@ -47,19 +51,24 @@ def login_view(request):
             msg = 'error validating form'
     return render(request, 'account/login.html', {'form': form, 'msg': msg})
 
+@csrf_exempt 
 def admin(request):
     return render (request, 'account/adminpage.html')
 
+@csrf_exempt 
 def patient(request):
     return render (request, 'account/patient.html')
 
+@csrf_exempt 
 def doctor(request):
     return render (request, 'account/doctor.html')
 
+@csrf_exempt 
 def logoutUser (request):
     logout (request)
     return redirect('login_view')
 
+@csrf_exempt 
 def editorg(request):
     expgid = 0
     try:
@@ -125,6 +134,7 @@ def editorg(request):
 
     return render(request, 'account/expedienteg.html', context)
 
+@csrf_exempt 
 def editoro(request):
     expoid = 0
     try:
@@ -176,23 +186,27 @@ def editoro(request):
     return render(request, 'account/expedienteo.html', context)
 
 
+@csrf_exempt 
 def delete_expedienteg(request, expgid):
     expedienteg = ExpedienteG.objects.get(pk=expgid)
     expedienteg.delete()
 
     return redirect('expedienteg')
 
+@csrf_exempt 
 def delete_expedienteo(request, expoid):
     expedienteo = ExpedienteO.objects.get(pk=expoid)
     expedienteo.delete()
     return redirect('expedienteo')
 
+@csrf_exempt 
 def delete_expediented(request, expdid):
     expediented = ExpedienteD.objects.get(pk=expdid)
     expediented.delete()
 
     return redirect('expediented')
 
+@csrf_exempt 
 def accountSettingsMedic(request):
     try:
         profile = request.user.profile
@@ -207,6 +221,7 @@ def accountSettingsMedic(request):
     
     return render(request, 'account/account_settings.html', {'form': form})
 
+@csrf_exempt 
 def viewExpediente(request):
     user_id = request.user.id
     expediente = ExpedienteG.objects.filter(idPg = user_id)
@@ -222,6 +237,7 @@ def viewExpediente(request):
     }
     return render (request, "account/patient.html", context)
 
+@csrf_exempt 
 def accountSettingsPatient(request):
     try:
         perfil = request.user.perfil
@@ -237,6 +253,7 @@ def accountSettingsPatient(request):
     return render(request, 'account/account_settingsP.html', {'form': form})
 
 
+@csrf_exempt 
 def editord(request):
     expdid = 0
     try:
@@ -296,8 +313,10 @@ def editord(request):
     return render(request, 'account/expediented.html', context)
 
 
+
 class Error404View(TemplateView):
     template_name = "account/error_404.html"
+
 
 
 class Error500View(TemplateView):

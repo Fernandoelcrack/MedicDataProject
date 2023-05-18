@@ -177,3 +177,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000/"
 ]
 
+CORS_ORIGIN_WHITELIST = [
+    "http://omaya.gerdoc.com/",
+    "http://127.0.0.1:8000/"
+]
+
