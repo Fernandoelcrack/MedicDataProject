@@ -133,6 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 CORS_ALLOWED_ORIGINS = [
     "https://omaya.gerdoc.com",
+    "http://127.0.0.1:8000",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -157,5 +158,13 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+CONTEXT_PROCESSORS = [
+    "django.core.context_processors.csrf"
+]
+
+CORS_EXPOSE_HEADERS = []
+
+CORS_ALLOW_CREDENTIALS = True
 
 
