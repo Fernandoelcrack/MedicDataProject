@@ -73,6 +73,7 @@
           <th scope="col">Peso</th>
           <th scope="col">Lesiones</th>
           <th scope="col">Alergias</th>
+          <th scope="col">enfermedades</th>
           <th scope="col">Tipo de sangre</th>
           <th scope="col">Paciente</th>
           <th scope="col">Doctor</th>
@@ -87,6 +88,7 @@
           <td>{{ expediente.peso }}</td>
           <td>{{ expediente.lesiones }}</td>
           <td>{{ expediente.alergias }}</td>
+          <td>{{ expediente.enfermedades }}</td>
           <td>{{ expediente.tipoSangre }}</td>
           <td>{{ expediente.idPg }}</td>
           <td>{{ expediente.idDg }}</td>
@@ -106,7 +108,11 @@
         <thead>
           <tr>
             <th scope="col">Nombre</th>
-            <th scope="col">Numero de diente</th>
+            <th scope="col">Diente 1</th>
+            <th scope="col">Diente 2</th>
+            <th scope="col">Diente 3</th>
+            <th scope="col">Diente 4</th>
+            <th scope="col">Diente 5</th>
             <th scope="col">Descripción</th>
             <th scope="col">Doctor</th>
             <th scope="col">Fecha de creación</th>
@@ -117,7 +123,11 @@
           {% for expediented in expediented %}
           <tr>
             <td scope="row"> {{ expediented.nombreD }}</th>
-            <td>{{ expediented.NDiente }}</td>
+            <td>{{ expediented.NDiente1 }}</td>
+            <td>{{ expediented.NDiente2 }}</td>
+            <td>{{ expediented.NDiente3 }}</td>
+            <td>{{ expediented.NDiente4 }}</td>
+            <td>{{ expediented.NDiente5 }}</td>
             <td>{{ expediented.Descripcion }}</td>
             <td>{{ expediented.idDd }}</td>
             <td>{{ expediented.fechaD }}</td>
